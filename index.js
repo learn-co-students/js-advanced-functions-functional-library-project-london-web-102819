@@ -112,11 +112,7 @@ const fi = (function() {
       return quickSort(copy);
     },
 
-    flatten: function() {
-
-    },
-
-    deepen: function(arr, oneLevel = false) {
+    flatten: function(arr, oneLevel = false) {
       let result = [];
       
       for(let i = 0; i < arr.length; i++) {
@@ -128,7 +124,7 @@ const fi = (function() {
             }
           } 
           else {
-            result = result.concat(fi.flatten(arr[i]));
+            result = result.concat(this.flatten(arr[i]));
           }
           
         } else {
