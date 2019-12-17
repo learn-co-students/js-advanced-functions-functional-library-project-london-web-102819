@@ -6,10 +6,10 @@ const fi = (function() {
 
     each: function(arr, alert) {
       
-      const length = Object.keys(arr).length;
+      const copy = (arr instanceof Array) ? copy.slice() : Object.values(arr);
 
-      for(let i = 0; i < length; i++) {
-        alert(arr[arr[i]], arr[i], arr);
+      for(let i = 0; i < copy.length; i++) {
+        alert(copy[i]);
       }
       return arr;
     },
@@ -92,36 +92,35 @@ const fi = (function() {
   
       function quickSort(a) {
 
-        if (a.length === 1) return [a[0]];
-        if (a.length === 0) return [];
-
-        const sorted = [a[0]];
-        let beforeCount = 0;
+        if (a.length <= 1) return a;
+        const lessThan = [];
+        const GreaterThan = [];
         
         for(let i = 1; i < a.length; i++) {
 
           if (fn(a[i]) > fn(a[0])) {
-            sorted.push(a[i]);
+            GreaterThan.push(a[i]);
           }
           else {
-            beforeCount++;
-            sorted.unshift(a[i]);
+            lessThan.push(a[i]);
           }
 
         }
         
-        const beforeSorted = quickSort(sorted.slice(0, beforeCount));
-        const afterSorted = quickSort(sorted.slice(beforeCount + 1));
-        
-        return [...beforeSorted, a[0], ...afterSorted];
+        return [...quickSort(lessThan), a[0], ...quickSort(GreaterThan)];
       }
       return quickSort(copy);
     },
 
-    flatten: function(arr, oneLevel = false) {
+    flatten: function() {
+
+    },
+
+    deepen: function(arr, oneLevel = false) {
       let result = [];
       
       for(let i = 0; i < arr.length; i++) {
+      
         if (arr[i] instanceof Array) {
           if (oneLevel) {
             for(let j = 0; j < arr[i].length; j++) {
